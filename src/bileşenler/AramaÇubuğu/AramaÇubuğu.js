@@ -8,15 +8,17 @@ import {
   faCompass,
 } from '@fortawesome/free-regular-svg-icons'
 import './AramaÇubuğu.css'
+import sahteVeri from '../../sahte-veri'
 
-const AramaÇubuğu = (props, { AramayiFiltrele }) => {
+const AramaÇubuğu = (props) => {
+  const { aramaOnChange } = props
   return (
     <div className="search-bar-wrapper">
       <div className="social">
         <FontAwesomeIcon icon={faInstagram} />
       </div>
       <form className="search-form">
-        <input type="text" placeholder="Arama" />
+        <input type="text" placeholder="Arama" onChange={aramaOnChange} />
       </form>
       <div className="social-wrapper">
         <div className="social">
