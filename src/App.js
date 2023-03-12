@@ -6,7 +6,7 @@
 
 // State hook u import edin
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // Gönderiler (çoğul!) ve AramaÇubuğu bileşenlerini import edin, çünkü bunlar App bileşeni içinde kullanılacak
 // sahteVeri'yi import edin
 import './App.css'
@@ -20,11 +20,9 @@ const App = () => {
   // Gönderi nesneleri dizisini tutmak için "gonderiler" adlı bir state oluşturun, **sahteVeri'yi yükleyin**.
   // Artık sahteVeri'ye ihtiyacınız olmayacak.
   // Arama çubuğunun çalışması için , arama kriterini tutacak başka bir state'e ihtiyacımız olacak.
-
-  const aramaOnChange = (e) => {
-    setAramaKriteri(e.target.value)
+  useEffect(() => {
     const aramaGirdisi = () => {
-      !aramaKriteri || aramaKriteri.length === 0
+      aramaKriteri === ''
         ? setGonderiler(sahteVeri)
         : setGonderiler(
             gonderiler.filter(
@@ -33,7 +31,7 @@ const App = () => {
           )
     }
     aramaGirdisi()
-  }
+  }, [aramaKriteri])
 
   const gonderiyiBegen = (gonderiID) => {
     /*
@@ -47,14 +45,12 @@ const App = () => {
         - gönderinin idsi "gonderiID" ile eşleşirse, istenen değerlerle yeni bir gönderi nesnesi döndürün.
         - aksi takdirde, sadece gönderi nesnesini değiştirmeden döndürün.
      */
-
     const postArray = []
     gonderiler.map((e) => {
       if (e.id == gonderiID) {
         e.likes += 1
       }
       postArray.push(e)
-      console.log(gonderiler + 'gonderi')
     })
     setGonderiler(postArray)
   }
@@ -62,7 +58,7 @@ const App = () => {
   return (
     <div className="App">
       {/* AramaÇubuğu ve Gönderiler'i render etmesi için buraya ekleyin */}
-      <AramaÇubuğu aramaOnChange={aramaOnChange} />
+      <AramaÇubuğu setAramaKriteri={setAramaKriteri} />
 
       <Gönderiler gonderiyiBegen={gonderiyiBegen} gonderiler={gonderiler} />
 
